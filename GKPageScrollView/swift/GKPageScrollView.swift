@@ -43,6 +43,9 @@ let GKPage_NavBar_Height: CGFloat = GKPage_IS_iPhoneX ? 88.0 : 64.0
 }
 
 @objc public protocol GKPageScrollViewDelegate : NSObjectProtocol {
+    
+    
+    func mainTableShouldScrollToTop(_ tableView: UITableView) -> Bool
     /// 返回是否懒加载列表（据此代理实现懒加载和非懒加载相应方法）
     ///
     /// - Parameter pageScrollView: pageScrollView description
@@ -519,6 +522,10 @@ extension GKPageScrollView: UITableViewDataSource, UITableViewDelegate {
         }
         
         self.mainTableViewCanScrollUpdate()
+    }
+    
+    public func scrollViewShouldScrollToTop(_ scrollView: UIScrollView) -> Bool {
+        return delegate?.mainTableShouldScrollToTop(mainTableView) ?? true
     }
 }
 
